@@ -17,9 +17,9 @@ export default function Header() {
   return (
     <>
       <header className='sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/80'>
-      <div className='max-auto max-w-6xl px-4 py-3 items-center justify-between'>
+      <div className='max-auto max-w-6xl px-4 py-3 items-center justify-between flex'>
       
-        <div className='flex items-center gap-3 px-4'>
+        <div className='flex items-center gap-3 px-4 '>
           <Link to='/' className='flex items-center gap-2
           '>
         
@@ -32,12 +32,28 @@ export default function Header() {
             </span>
           </div>
           </Link>
-          <nav className='items-center gap-3 text-sm font-medium text-slate-700 dark:text-slate-200 sm:flex'>
-            <Link to='/products' className='rounded-lg px-3 py-1 transition hover:bg-slate-100 dakr:hover:bg-slate-800'>
-            Products
+          <nav className='hidden items-center gap-3 text-sm font-medium text-slate-700 dark:text-slate-200 sm:flex'>
+            <Link to='/home' className='rounded-lg px-3 py-1 transition hover:bg-slate-100 dakr:hover:bg-slate-800'>
+              Home
             </Link>
+            <Link to='/home' className='rounded-lg px-3 py-1 transition hover:bg-slate-100 dakr:hover:bg-slate-800'>
+              Products
+            </Link>
+            <Link to='/home' className='rounded-lg px-3 py-1 transition hover:bg-slate-100 dakr:hover:bg-slate-800'>
+              Craete-Product
+            </Link>
+           
+
           </nav>
+           
         </div>
+        <div className='flex items-center gap-2'>
+              <Link to='/cart' className='inline-flex items-center gap-2 rounded-full px-2 py-2 text-xs font-semibold  border border-slate-200 text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md'>
+                <span>Cart</span>
+                <span className='flex items-center bg-black rounded-2xl text-white px-1 py-0.5'>0</span>
+                <span className='hidden text-[11px] font-medium text-slate-500 sm:inline'>$10</span>
+              </Link>
+            </div>
       </div>
       </header>
     </>
