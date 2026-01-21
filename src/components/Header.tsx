@@ -4,10 +4,11 @@ import { ShoppingBag } from 'lucide-react'
 export default function Header() {
   return (
     <>
-      <header className='sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/80 flex justify-between h-full items-center '>
-      <div className='max-auto max-w-6xl px-4 py-3 items-center justify-between flex'>
+    <div className='w-full flex justify-center items-center '>
+      <header className='sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/80 flex justify-center gap-4 w-full h-full items-center '>
+      <div className='max-auto w-full  px-4 py-3 items-center  justify-center sm:gap-110 gap-4 flex'>
       
-        <div className='flex  items-center gap-3 px-4 '>
+        <div className='flex items-center gap-3 px-4 '>
           <Link to='/' className='flex items-center gap-2
           '>
         
@@ -41,9 +42,10 @@ export default function Header() {
                 <span className='flex items-center  rounded-2xl  px-1 py-0.5 '>0</span>
                 <span className='hidden text-[11px] font-medium text-white sm:inline'>$10</span>
               </Link>
-            </div>
+        </div>
       </div>
       </header>
+    </div>
     </>
   )
 }

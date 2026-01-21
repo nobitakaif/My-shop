@@ -38,7 +38,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <div className='min-h-screen bg-slate-100 text-slate-900 dark:bg-slate-950 dark:text-white'>
+        <div className='min-h-screen bg-slate-100 w-full text-slate-900 dark:bg-slate-950 dark:text-white'>
           <Header />
            <main className='px-4 py-6'>
             {children}
