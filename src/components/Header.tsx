@@ -1,22 +1,10 @@
 import { Link } from '@tanstack/react-router'
-
-import { useState } from 'react'
-import {
-  ChevronDown,
-  ChevronRight,
-  Home,
-  Menu,
-  Network,
-  ShoppingBag,
-  SquareFunction,
-  StickyNote,
-  X,
-} from 'lucide-react'
+import { ShoppingBag } from 'lucide-react'
 
 export default function Header() {
   return (
     <>
-      <header className='sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/80'>
+      <header className='sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/80 flex justify-between h-full items-center '>
       <div className='max-auto max-w-6xl px-4 py-3 items-center justify-between flex'>
       
         <div className='flex  items-center gap-3 px-4 '>
