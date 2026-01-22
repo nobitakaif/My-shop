@@ -26,12 +26,19 @@ export function ProductCard({
     }
 }){ 
     return (
-        <Link to="/products/$id" params={{id : 0}} className="cursor-pointer h-full  hover:-translate-y-1 hover:shadow-lg transition">
-        <Card className="shadow-xl">
-            <CardHeader>
+        <Link to="/products/$id" params={{id}} className="cursor-pointer h-full rounded-full hover:-translate-y-1 hover:shadow-lg transition">
+        <Card className="shadow-xl px-2 py-5">
+            <CardHeader className="gap-2">
+                <div className="flex items-center gap-2">
+                    {product.badge && (
+                        <span className="rounded-full bg-slate-900 px-2 py-0.5 text-xs font-semibold text-white">
+                            {product.badge}
+                        </span>
+                    )}
+                </div>
                 <CardTitle>{product.name}</CardTitle>
                 <CardDescription>{product.description}</CardDescription>
-                <CardAction>${product.price}</CardAction>
+                {/* <CardAction>${product.price}</CardAction> */}
             </CardHeader>
             <CardContent className="flex items-center justify-between">
                  <div className="flex items-center gap-2 text-sm text-slate-600">

@@ -30,7 +30,7 @@ function App() {
         <h1><span className='hover:text-blue-500 hover:cursor-no-drop'>MyShop</span> - Instant start your shop <span className='hidden sm:inline'> anywhere, anytime. </span>  <span className='text-blue-500 hidden md:block '>Just connect with Us</span></h1>
         </CardTitle>
         <CardDescription >
-        <Link to='/produtcs' className='inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl justify-center hover:bg-blue-400'>
+        <Link to='/products' className='inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl justify-center hover:bg-blue-400'>
           Browse Products
           <ArrowRight size={16} className="" />
 
@@ -39,7 +39,7 @@ function App() {
       </Card>
       </section>
       <section className='sm:w-[70%] w-[90%] flex flex-col gap-2'>
-        <Card className='p-8 shadow-md bg-white/80 '>
+        <Card className='p-6 shadow-md bg-white/80 '>
           <div className='flex items-center justify-between'>
             <div>
             <CardHeader className='px-0'>

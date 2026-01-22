@@ -1,12 +1,13 @@
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
+import { HeadContent, Scripts, createRootRoute, createRootRouteWithContext } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
+import { QueryClientProvider, type QueryClient} from "@tanstack/react-query"
 
 import Header from '../components/Header'
 
 import appCss from '../styles.css?url'
 
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<{queryClient : QueryClient}>()({
   head: () => ({
     meta: [
       {
@@ -32,13 +33,15 @@ export const Route = createRootRoute({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const { queryClient }  = Route.useRouteContext()
   return (
+    <QueryClientProvider client={queryClient}>
     <html lang="en">
       <head>
         <HeadContent />
       </head>
       <body>
-        <div className='min-h-screen bg-slate-100 w-full text-slate-900 dark:bg-slate-950 dark:text-white'>
+        <div className='min-h-screen bg-slate-100  text-slate-900 dark:bg-slate-950 dark:text-white'>
           <Header />
            <main className='px-4 py-6'>
             {children}
@@ -56,8 +59,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             },
           ]}
         />
+        <TanStackDevtools/>
         <Scripts />
       </body>
     </html>
+    </QueryClientProvider>
   )
 }

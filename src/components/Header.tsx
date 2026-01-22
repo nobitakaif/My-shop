@@ -6,7 +6,7 @@ export default function Header() {
     <>
     <div className='w-full flex justify-center items-center '>
       <header className='sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/80 flex justify-center gap-4 w-full h-full items-center '>
-      <div className='max-auto w-full  px-4 py-3 items-center  justify-center sm:gap-110 gap-4 flex'>
+      <div className='max-auto w-full  px-4 py-3 items-center  justify-between sm:gap-110 gap-4 flex sm:justify-ceneter sm:items-center'>
       
         <div className='flex items-center gap-3 px-4 '>
           <Link to='/' className='flex items-center gap-2
