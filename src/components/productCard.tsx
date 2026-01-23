@@ -3,6 +3,11 @@ import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader,
 import { Button } from "./ui/button"
 import { ShoppingBagIcon } from "lucide-react"
 import { Link } from "@tanstack/react-router"
+import {
+
+    badgeEnum,
+    InvertoryEnum,
+} from "../db/schema"
 
 
 const inventoryTone = {
@@ -15,18 +20,19 @@ export function ProductCard({
     product,
 }: {
     product: {
+        id : string
         name : string
         description : string
-        price : string
-        badge : string 
+        price : string,
+        badge : typeof badgeEnum,
         rating : string
         reviews : number 
         image? : string
-        inventory : string 
+        inventory : InvertoryEnum 
     }
 }){ 
     return (
-        <Link to="/products/$id" params={{id}} className="cursor-pointer h-full rounded-full hover:-translate-y-1 hover:shadow-lg transition">
+        <Link to="/products/$id" params={{id : product.id}} className="cursor-pointer h-full rounded-full hover:-translate-y-1 hover:shadow-lg transition">
         <Card className="shadow-xl px-2 py-5">
             <CardHeader className="gap-2">
                 <div className="flex items-center gap-2">
