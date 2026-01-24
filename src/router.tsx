@@ -17,7 +17,7 @@ export const getRouter = () => {
     defaultNotFoundComponent:()=>{
       return (
         <div>
-          <p>Not found!</p>
+          <p>Sorry! This page is still in building phase</p>
           <Link to='/'>Go to home</Link>
         </div>
       )

@@ -1,4 +1,4 @@
-import { sampleProducts } from 'script/seed'
+
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { getProductById } from '@/data/products'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
@@ -13,7 +13,7 @@ export const Route = createFileRoute('/products/$id')({
 })
 
 function RouteComponent() {
-  const { id } = Route.useParams()
+  // const { id } = Route.useParams()
   const product = Route.useLoaderData()
   return  <div>
     <Card className='max-w-4xl mx-auto p-4'>

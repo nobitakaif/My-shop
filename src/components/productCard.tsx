@@ -1,12 +1,9 @@
 import { cn } from "@/lib/utils"
-import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card"
 import { Button } from "./ui/button"
 import { ShoppingBagIcon } from "lucide-react"
 import { Link } from "@tanstack/react-router"
 import {
-
-    badgeEnum,
-    InvertoryEnum,
     ProductSelect,
 } from "../db/schema"
 

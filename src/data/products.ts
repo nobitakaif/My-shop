@@ -1,5 +1,5 @@
 import { db } from "@/db"
-import { ProductInsert, products } from "@/db/schema"
+import {  products } from "@/db/schema"
 import { eq } from "drizzle-orm"
 
 export async function getAllProducts(){
