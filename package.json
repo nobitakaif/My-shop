@@ -10,7 +10,7 @@
     "db:migrate" : "drizzle-kit migrate",
     "db:studio" : "drizzle-kit studio",
     "db:push" : "drizzle-kit push",
-    "db:seed" : "NODE_ENV=production NITRO_PRESET=node-server bun ./scripts/seed.ts",
+    "db:seed" : "NODE_ENV=production NITRO_PRESET=node-server bun ./script/seed.ts",
     "test": "vitest run",
     "lint": "eslint",
     "format": "prettier",

@@ -7,6 +7,7 @@ import {
 
     badgeEnum,
     InvertoryEnum,
+    ProductSelect,
 } from "../db/schema"
 
 
@@ -19,20 +20,10 @@ const inventoryTone = {
 export function ProductCard({
     product,
 }: {
-    product: {
-        id : string
-        name : string
-        description : string
-        price : string,
-        badge : typeof badgeEnum,
-        rating : string
-        reviews : number 
-        image? : string
-        inventory : InvertoryEnum 
-    }
+    product: ProductSelect
 }){ 
     return (
-        <Link to="/products/$id" params={{id : product.id}} className="cursor-pointer h-full rounded-full hover:-translate-y-1 hover:shadow-lg transition">
+        <Link to="/products/$id" params={{id : product.id}} className="cursor-pointer h-full rounded-full hover:-translate-y-1 hover:shadow-lg transition duration-500">
         <Card className="shadow-xl px-2 py-5">
             <CardHeader className="gap-2">
                 <div className="flex items-center gap-2">

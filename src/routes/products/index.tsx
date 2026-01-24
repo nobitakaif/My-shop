@@ -1,9 +1,9 @@
 import { ProductCard } from '@/components/productCard'
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { sampleProducts } from 'script/seed'
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { createMiddleware, createServerFn, json } from '@tanstack/react-start'
+import { getAllProducts } from '@/data/products'
 
 
 const loggerMiddleware = createMiddleware().server(async ({ next, request }) => {
@@ -12,7 +12,7 @@ const loggerMiddleware = createMiddleware().server(async ({ next, request }) => 
 })
 
 const fetchProducts = createServerFn({ method: "GET" }).handler(async () => {
-  return sampleProducts
+  return await getAllProducts()
 })
 
 export const Route = createFileRoute('/products/')({
