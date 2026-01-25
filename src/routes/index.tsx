@@ -1,10 +1,10 @@
-import { ProductCard } from '@/components/productCard'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { getRecommendedProducts } from '@/data/products'
 import { sampleProducts } from 'script/seed'
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { ArrowRight, ArrowRightIcon, Car, CardSimIcon } from 'lucide-react'
+import { getRecommendedProducts } from '@/data/products'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { ProductCard } from '@/components/productCard'
 
 export const Route = createFileRoute('/')({
   component: App,

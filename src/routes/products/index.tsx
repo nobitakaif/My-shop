@@ -1,8 +1,8 @@
-import { ProductCard } from '@/components/productCard'
-import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { createMiddleware, createServerFn, json } from '@tanstack/react-start'
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { ProductCard } from '@/components/productCard'
 import { getAllProducts } from '@/data/products'
 
 

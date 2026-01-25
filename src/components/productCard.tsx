@@ -1,11 +1,11 @@
-import { cn } from "@/lib/utils"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card"
-import { Button } from "./ui/button"
 import { ShoppingBagIcon } from "lucide-react"
 import { Link } from "@tanstack/react-router"
-import {
+import { Button } from "./ui/button"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card"
+import type {
     ProductSelect,
 } from "../db/schema"
+import { cn } from "@/lib/utils"
 
 
 const inventoryTone = {
@@ -40,7 +40,7 @@ export function ProductCard({
                     <span className="text-slate-400">{product.reviews}</span>       
                  </div>
                  <span className={cn("rounded-full border px-3 py-1 text-xs font-semibold",
-                    inventoryTone[product.inventory as keyof typeof inventoryTone],
+                    inventoryTone[product.inventory],
                  )}>{product.inventory}</span>
             </CardContent>
             <CardFooter className="pt-0 flex items-center justify-between border-t-0 bg-transparent">
