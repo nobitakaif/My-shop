@@ -6,6 +6,8 @@ import type {
     ProductSelect,
 } from "../db/schema"
 import { cn } from "@/lib/utils"
+import { Suspense } from "react"
+import { Skeleton } from "./ui/skeleton"
 
 
 const inventoryTone = {
@@ -20,6 +22,16 @@ export function ProductCard({
     product: ProductSelect
 }){ 
     return (
+        <Suspense fallback={
+        <div>
+          <h2 className='text-2xl font-bold my-4'>Recommended Products</h2>
+          <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
+          {Array.from({length : 3}).map((_, index)=>(
+            <Skeleton  key={index} className='w-full h-48'/> 
+          ))}
+        </div>
+      </div>
+      }>
         <Link to="/products/$id" params={{id : product.id}} className="cursor-pointer h-full rounded-full hover:-translate-y-1 hover:shadow-lg transition duration-500">
         <Card className="shadow-xl px-2 py-5">
             <CardHeader className="gap-2">
@@ -56,5 +68,6 @@ export function ProductCard({
             
         </Card>
         </Link>
+        </Suspense>
     )
 }

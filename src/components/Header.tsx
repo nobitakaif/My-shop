@@ -28,7 +28,7 @@ export default function Header() {
             <Link to='/home' className='rounded-lg px-3 py-1 transition hover:bg-slate-100 dakr:hover:bg-slate-800'>
               Products
             </Link>
-            <Link to='/home' className='rounded-lg px-3 py-1 transition hover:bg-slate-100 dakr:hover:bg-slate-800'>
+            <Link to='/products/create-products' className='rounded-lg px-3 py-1 transition hover:bg-slate-100 dakr:hover:bg-slate-800'>
               Craete-Product
             </Link>
            

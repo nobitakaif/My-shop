@@ -1,0 +1,164 @@
+import { BadgeValue, inventoryValues } from '@/db/schema';
+import { createFileRoute } from '@tanstack/react-router'
+import { useForm } from '@tanstack/react-form';
+import { z } from "zod"
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { FieldError } from '@/components/Field-error';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Textarea } from '@/components/ui/textarea';
+import { Select } from '@/components/ui/select';
+import { SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
+export const Route = createFileRoute('/products/create-products')({
+  component: RouteComponent,
+})
+
+const productSchema = z.object({
+  name: z.string().min(1, 'Name is required'),
+  description: z.string().min(1, 'Description is required'),
+  price: z
+    .string()
+    .refine((val) => !isNaN(Number(val)), 'Price must be a number'),
+  badge: z.union([z.enum(["New","Sale","Featured", "Limited"]), z.undefined()]),
+  rating: z.number().min(0, 'Rating is required'),
+  reviews: z.number().min(0, 'Reviews is required'),
+  image: z
+    .string()
+    .url('Image must be a valid URL')
+    .max(512, 'Image must be 512 chars or less'),
+  inventory: z.enum(['in-stock', 'backorder', 'preorder']),
+});
+
+
+
+function RouteComponent() {
+    const form = useForm({
+        defaultValues : {
+            name : '',
+            description : '',
+            price : '',
+            badge : undefined as BadgeValue | undefined,
+            rating : 0,
+            reviews : 0,
+            image : '',
+            invetory : inventoryValues
+        },
+        validators :{
+            onChange : ({value})=>{
+                const  result = productSchema.safeParse(value)
+                if(!result.success){
+                    return result.error.issues.map((i)=>i.message).join(', ')
+                }
+                return undefined
+            }
+        }
+    })
+  return <div className='mx-auto max-w-7xl py-8 px-4'>
+    <div className='space-y-6'>
+    <Card>
+        <CardHeader className='gap-2'>
+            <CardTitle className='text-lg'> Create Product</CardTitle>
+            <CardDescription className='line-clamp-2'>
+                Fill in the details to add a new products to the catalog``
+            </CardDescription>
+        </CardHeader>
+    </Card>
+    <Card>
+        <CardContent>
+            <form onSubmit={(e)=>{
+                e.preventDefault()
+                e.stopPropagation()
+                form.handleSubmit()
+                
+            }} className='space-y-6'>
+                <form.Field name="name">
+                    {(field) =>(
+                        <div className='space-y-2'>
+                            <Label htmlFor={field.name}> Product Name </Label>
+                            <Input type='text' id={field.name} name={field.name}  value={field.state.value} onChange={(e)=> field.handleChange(e.target.value)}
+                                placeholder='Enter your product name' area-invalid={field.state.meta.errors.length} />
+                            <FieldError error={field.state.meta.errors}/>
+                        </div>
+                    )}
+                </form.Field>
+                  <form.Field name="description">
+                    {(field) =>(
+                        <div className='space-y-2'>
+                            <Label htmlFor={field.name}> Product description </Label>
+                            <Textarea id={field.name} name={field.name}  value={field.state.value} onChange={(e)=> field.handleChange(e.target.value)}
+                                placeholder='Enter description for your product ' area-invalid={field.state.meta.errors.length} />
+                            <FieldError error={field.state.meta.errors}/>
+                        </div>
+                    )}
+                </form.Field>
+                <form.Field name="price">
+                    {(field) =>(
+                        <div className='space-y-2'>
+                            <Label htmlFor={field.name}> Price</Label>
+                            <Input type='number' id={field.name} name={field.name} step={"0.01"}  onChange={(e)=> field.handleChange(e.target.value)}
+                                placeholder='0.0 ' area-invalid={field.state.meta.isValid} />
+                            <FieldError error={field.state.meta.errors}/>
+                        </div>
+                    )}
+                </form.Field>
+                <form.Field name="image">
+                    {(field) =>(
+                        <div className='space-y-2'>
+                            <Label htmlFor={field.name}> Image Url </Label>
+                            <Input type='url' id={field.name} name={field.name}  value={field.state.value} onChange={(e)=> field.handleChange(e.target.value)}
+                                placeholder='https://example.com/image.jpg' area-invalid={field.state.meta.errors.length} />
+                            <FieldError error={field.state.meta.errors}/>
+                        </div>
+                    )}
+                </form.Field>
+                <form.Field name="badge">
+                    {(field) =>(
+                        <div className='space-y-2'>
+                            <Label htmlFor={field.name}> Badge (optional)</Label>
+                            <Select value={field.state.value ?? ""} onValueChange={(value)=> 
+                                field.handleChange(value === ''? undefined : (value as BadgeValue))
+                            }>
+                                <SelectTrigger id={field.name} className='w-full'>
+                                    <SelectValue/>
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value=''>None</SelectItem>
+                                    <SelectItem value='New'>New</SelectItem>
+                                    <SelectItem value='Sale'>Sale</SelectItem>
+                                    <SelectItem value='Featured'>Featured</SelectItem>
+                                    <SelectItem value='Limited'>Limited</SelectItem>
+                                </SelectContent>
+                            </Select>
+                            <FieldError error={field.state.meta.errors}/>
+                        </div>
+                    )}
+                </form.Field>
+                  {/* <form.Field name="invetory">
+                    {(field) =>(
+                        <div className='space-y-2'>
+                            <Label htmlFor={field.name}> Inventory Status</Label>
+                            <Select value={field.state.value as typeof inventoryValues ?? ""} onValueChange={(value)=> 
+                                field.handleChange(value as inventoryValues)
+                            }>
+                                <SelectTrigger id={field.name} className='w-full'>
+                                    <SelectValue/>
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value=''>None</SelectItem>
+                                    <SelectItem value='New'>New</SelectItem>
+                                    <SelectItem value='Sale'>Sale</SelectItem>
+                                    <SelectItem value='Featured'>Featured</SelectItem>
+                                    <SelectItem value='Limited'>Limited</SelectItem>
+                                </SelectContent>
+                            </Select>
+                            <FieldError error={field.state.meta.errors}/>
+                        </div>
+                    )}
+                </form.Field> */}
+            </form>
+        </CardContent>
+    </Card>
+    </div>
+  </div>
+}

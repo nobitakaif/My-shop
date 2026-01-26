@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { RecommendedProducts } from '@/components/RecommendedProducts'
 import { ProductSelect } from '@/db/schema'
 import { Suspense } from 'react'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export const Route = createFileRoute('/products/$id')({
   component: RouteComponent,
@@ -103,7 +104,16 @@ function RouteComponent() {
           </div>
         </div>
       </Card>
-      <Suspense fallback={<div>Loading recommended Product</div>}>
+      <Suspense fallback={
+        <div>
+          <h2 className='text-2xl font-bold my-4'>Recommended Products</h2>
+          <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
+          {Array.from({length : 3}).map((_, index)=>(
+            <Skeleton  key={index} className='w-full h-48'/> 
+          ))}
+        </div>
+      </div>
+      }>
         <RecommendedProducts recommendedProducts={recommendedProducts}/>
       </Suspense>
     </Card>
