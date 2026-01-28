@@ -1,5 +1,5 @@
-import { BadgeValue, inventoryValues } from '@/db/schema';
-import { createFileRoute } from '@tanstack/react-router'
+import {  BadgeValue,   InventoryValues,  InvertoryEnum, ProductInsert, ProductSelect } from '@/db/schema';
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useForm } from '@tanstack/react-form';
 import { z } from "zod"
 import { Label } from '@/components/ui/label';
@@ -9,6 +9,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Textarea } from '@/components/ui/textarea';
 import { Select } from '@/components/ui/select';
 import { SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
+import { createServerFn } from '@tanstack/react-start';
+
 
 export const Route = createFileRoute('/products/create-products')({
   component: RouteComponent,
@@ -30,9 +33,32 @@ const productSchema = z.object({
   inventory: z.enum(['in-stock', 'backorder', 'preorder']),
 });
 
+type CreateProductData ={
+    name : string
+    description : string
+    price : string
+    image : string
+    badge? : 'New' | 'Sale' | 'Featured' | 'Limited'
+    inventory : 'in-stock' | 'backorder' | 'preorder'
+}
 
+const createProductServerFn = createServerFn({method : 'POST'}).inputValidator(
+    (data : CreateProductData) =>data
+).handler(async ({data}) : Promise<ProductSelect> =>{
+    const { createProduct } = await import("@/data/products")
+    const productData : ProductInsert = {
+        name : data.name,
+        description : data.description,
+        price : data.price,
+        image : data.image,
+        badge : data.badge!,
+        inventory : data.inventory,
+    }
+    return createProduct(productData)
+})
 
 function RouteComponent() {
+    const navigate = useNavigate()
     const form = useForm({
         defaultValues : {
             name : '',
@@ -42,7 +68,7 @@ function RouteComponent() {
             rating : 0,
             reviews : 0,
             image : '',
-            invetory : inventoryValues
+            inventory : 'in-stock' as InvertoryEnum
         },
         validators :{
             onChange : ({value})=>{
@@ -53,6 +79,9 @@ function RouteComponent() {
                 return undefined
             }
         }
+    })
+    InventoryValues.map((e)=>{
+        console.log("enum values -> ",e)
     })
   return <div className='mx-auto max-w-7xl py-8 px-4'>
     <div className='space-y-6'>
@@ -123,7 +152,7 @@ function RouteComponent() {
                                     <SelectValue/>
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value=''>None</SelectItem>
+                                    {/* <SelectItem value='none'>None</SelectItem> */}
                                     <SelectItem value='New'>New</SelectItem>
                                     <SelectItem value='Sale'>Sale</SelectItem>
                                     <SelectItem value='Featured'>Featured</SelectItem>
@@ -134,28 +163,44 @@ function RouteComponent() {
                         </div>
                     )}
                 </form.Field>
-                  {/* <form.Field name="invetory">
-                    {(field) =>(
-                        <div className='space-y-2'>
-                            <Label htmlFor={field.name}> Inventory Status</Label>
-                            <Select value={field.state.value as typeof inventoryValues ?? ""} onValueChange={(value)=> 
-                                field.handleChange(value as inventoryValues)
-                            }>
-                                <SelectTrigger id={field.name} className='w-full'>
-                                    <SelectValue/>
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value=''>None</SelectItem>
-                                    <SelectItem value='New'>New</SelectItem>
-                                    <SelectItem value='Sale'>Sale</SelectItem>
-                                    <SelectItem value='Featured'>Featured</SelectItem>
-                                    <SelectItem value='Limited'>Limited</SelectItem>
-                                </SelectContent>
-                            </Select>
-                            <FieldError error={field.state.meta.errors}/>
+                <form.Field name="inventory">
+                    {(field) => (
+                        <div className="space-y-2">
+                        <Label htmlFor={field.name}>Inventory Status</Label>
+
+                        <Select
+                            value={field.state.value}
+                            onValueChange={(value) =>
+                            field.handleChange(value as InvertoryEnum)
+                            }
+                        >
+                            <SelectTrigger id={field.name} className="w-full">
+                            <SelectValue placeholder="Select inventory status" />
+                            </SelectTrigger>
+
+                            <SelectContent>
+                                <SelectItem value='in-stock'>Instock</SelectItem>
+                                <SelectItem value='backorder'>Backorder</SelectItem>
+                                <SelectItem value='preorder'>Preorder</SelectItem>
+                            </SelectContent>
+                        </Select>
+
+                        <FieldError error={field.state.meta.errors} />
                         </div>
                     )}
-                </form.Field> */}
+                </form.Field>
+                <form.Subscribe selector={(state)=> [state.canSubmit, state.isSubmitted]}>
+                    {([canSubmit, isSubmiting])=>(
+                        <div className='flex gap-4'>
+                            <Button type='submit' disabled={!canSubmit || isSubmiting} className='flex-1'>
+                                {isSubmiting ? 'Creating...' : 'Create Product'}
+                            </Button>
+                            <Button type='button' variant={'outline'} onClick={()=> navigate({to : "/products"})}>
+                                Cancel
+                            </Button>
+                        </div>
+                    )}
+                </form.Subscribe>
             </form>
         </CardContent>
     </Card>

@@ -1,7 +1,6 @@
 
 import { Link, createFileRoute, notFound } from '@tanstack/react-router'
 import { ArrowLeftIcon, ShoppingBag, SparkleIcon } from 'lucide-react'
-import { getProductById, getRecommendedProducts } from '@/data/products'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { RecommendedProducts } from '@/components/RecommendedProducts'
@@ -12,6 +11,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 export const Route = createFileRoute('/products/$id')({
   component: RouteComponent,
   loader : async ({params})=>{
+    const {getRecommendedProducts, getProductById} = await import("@/data/products")
     const recommendedProducts = getRecommendedProducts()
     const product =  await getProductById(params.id)
     if(!product){
