@@ -5,24 +5,28 @@ import { ArrowRight, ArrowRightIcon, Car, CardSimIcon } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { ProductCard } from '@/components/productCard'
 
+const fetchProductsFn = createServerFn({method : "GET"}).handler(async ()=>{
+  const { getRecommendedProducts } = await import("@/data/products")
+  const products = await getRecommendedProducts()
+  return products
+})
+
 export const Route = createFileRoute('/')({
   component: App,
   loader: async () => {
     // this run on server during SSR and on client during navigation
 
-    const { getRecommendedProducts } = await import("@/data/products")
-    const products = await getRecommendedProducts()
-    return { products }
+    return fetchProductsFn()
   }
 })
 
 
-export const getServerTime = createServerFn().handler(async () => {
-  return
-})
+// export const getServerTime = createServerFn().handler(async () => {
+//   return
+// })
 
 function App() {
-  const { products } = Route.useLoaderData()
+  const products  = Route.useLoaderData()
   return (
     <div className='space-y-8 bg-linear-to-b  flex flex-col items-center justify-center p-6 '>
       <section className='sm:w-[70%] w-[90%]'>

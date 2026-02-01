@@ -1,5 +1,5 @@
-import {  BadgeValue,   InventoryValues,  InvertoryEnum, ProductInsert, ProductSelect } from '@/db/schema';
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import {  BadgeValue,   inventoryValues,  InvertoryEnum, ProductInsert, ProductSelect } from '@/db/schema';
+import { createFileRoute, useNavigate, useRouter } from '@tanstack/react-router'
 import { useForm } from '@tanstack/react-form';
 import { z } from "zod"
 import { Label } from '@/components/ui/label';
@@ -46,19 +46,20 @@ const createProductServerFn = createServerFn({method : 'POST'}).inputValidator(
     (data : CreateProductData) =>data
 ).handler(async ({data}) : Promise<ProductSelect> =>{
     const { createProduct } = await import("@/data/products")
-    const productData : ProductInsert = {
+    const productData  = {
         name : data.name,
         description : data.description,
         price : data.price,
         image : data.image,
-        badge : data.badge!,
+        badge : data.badge ?? null!,
         inventory : data.inventory,
     }
-    return createProduct(productData)
+    return createProduct(productData as ProductInsert) 
 })
 
 function RouteComponent() {
     const navigate = useNavigate()
+    const router = useRouter()
     const form = useForm({
         defaultValues : {
             name : '',
@@ -78,9 +79,27 @@ function RouteComponent() {
                 }
                 return undefined
             }
+        },
+        onSubmit : async({value})=>{
+            try{
+                await createProductServerFn({
+                    data :{
+                        name :value.name,
+                        description : value.description,
+                        image : value.image,
+                        inventory : value.inventory,
+                        price : value.price,
+                        badge : value.badge
+                    }
+                })
+                router.invalidate({sync : true})
+                navigate({to : "/products"})
+            }catch(e){
+                console.log("Error creating product ", e)
+            }
         }
     })
-    InventoryValues.map((e)=>{
+    inventoryValues.map((e:any)=>{
         console.log("enum values -> ",e)
     })
   return <div className='mx-auto max-w-7xl py-8 px-4'>
@@ -106,7 +125,7 @@ function RouteComponent() {
                         <div className='space-y-2'>
                             <Label htmlFor={field.name}> Product Name </Label>
                             <Input type='text' id={field.name} name={field.name}  value={field.state.value} onChange={(e)=> field.handleChange(e.target.value)}
-                                placeholder='Enter your product name' area-invalid={field.state.meta.errors.length} />
+                                placeholder='Enter your product name'  />
                             <FieldError error={field.state.meta.errors}/>
                         </div>
                     )}
@@ -116,7 +135,7 @@ function RouteComponent() {
                         <div className='space-y-2'>
                             <Label htmlFor={field.name}> Product description </Label>
                             <Textarea id={field.name} name={field.name}  value={field.state.value} onChange={(e)=> field.handleChange(e.target.value)}
-                                placeholder='Enter description for your product ' area-invalid={field.state.meta.errors.length} />
+                                placeholder='Enter description for your product '  />
                             <FieldError error={field.state.meta.errors}/>
                         </div>
                     )}
@@ -126,7 +145,7 @@ function RouteComponent() {
                         <div className='space-y-2'>
                             <Label htmlFor={field.name}> Price</Label>
                             <Input type='number' id={field.name} name={field.name} step={"0.01"}  onChange={(e)=> field.handleChange(e.target.value)}
-                                placeholder='0.0 ' area-invalid={field.state.meta.isValid} />
+                                placeholder='0.0 ' />
                             <FieldError error={field.state.meta.errors}/>
                         </div>
                     )}
@@ -136,7 +155,7 @@ function RouteComponent() {
                         <div className='space-y-2'>
                             <Label htmlFor={field.name}> Image Url </Label>
                             <Input type='url' id={field.name} name={field.name}  value={field.state.value} onChange={(e)=> field.handleChange(e.target.value)}
-                                placeholder='https://example.com/image.jpg' area-invalid={field.state.meta.errors.length} />
+                                placeholder='https://example.com/image.jpg'  />
                             <FieldError error={field.state.meta.errors}/>
                         </div>
                     )}

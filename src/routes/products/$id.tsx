@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from '@/components/ui/button'
 import { RecommendedProducts } from '@/components/RecommendedProducts'
 import { ProductSelect } from '@/db/schema'
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 import { Skeleton } from '@/components/ui/skeleton'
 
 export const Route = createFileRoute('/products/$id')({
@@ -15,6 +15,7 @@ export const Route = createFileRoute('/products/$id')({
     const recommendedProducts = getRecommendedProducts()
     const product =  await getProductById(params.id)
     if(!product){
+      window.location.reload()
       throw notFound()
     }
     return {product, recommendedProducts : recommendedProducts}
@@ -50,6 +51,9 @@ export const Route = createFileRoute('/products/$id')({
 function RouteComponent() {
   // const { id } = Route.useParams()
   const {product, recommendedProducts} = Route.useLoaderData()
+  // useEffect(()=>{
+  //   window.location.reload()    
+  // },[])
   return  <div>
     <Card className='max-w-4xl mx-auto p-4'>
        <Link to='/products' className='inline-flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-700'>

@@ -3,10 +3,10 @@ import { integer,numeric, pgEnum, pgTable, text, timestamp, uuid, varchar} from 
 
 
 export const badgeValues = ["New", "Sale", "Featured", "Limited"] as const
-export const InventoryValues = ["in-stock", "backorder", "preorder"]as const
+export const inventoryValues = ["in-stock", "backorder", "preorder"]as const
 // export const InventoryValues = ["in-stock", "backorder", "preorder"] as const
 export const badgeEnum = pgEnum('badge', badgeValues)
-export const invertoryEnum = pgEnum("inventory",InventoryValues)
+export const invertoryEnum = pgEnum("inventory",inventoryValues)
 
 export const products = pgTable("products", {
     id : uuid('id').primaryKey().defaultRandom(),
@@ -34,7 +34,7 @@ export const cartItems = pgTable('cart_items',{
 export type CartItemSelect = typeof cartItems.$inferSelect
 export type CartItemInsert = typeof cartItems.$inferInsert
 
-// export enum
+// export 
 
 export type BadgeValue = (typeof badgeValues)[number]
-export type InvertoryEnum = (typeof InventoryValues)[number]
+export type InvertoryEnum = (typeof inventoryValues)[number]

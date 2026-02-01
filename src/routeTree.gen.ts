@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductsIndexRouteImport } from './routes/products/index'
 import { Route as ProductsCreateProductsRouteImport } from './routes/products/create-products'
+import { Route as ProductsCartRouteImport } from './routes/products/cart'
 import { Route as ProductsIdRouteImport } from './routes/products/$id'
 import { Route as DemoStartServerFuncsRouteImport } from './routes/demo/start.server-funcs'
 import { Route as DemoStartApiRequestRouteImport } from './routes/demo/start.api-request'
@@ -34,6 +35,11 @@ const ProductsIndexRoute = ProductsIndexRouteImport.update({
 const ProductsCreateProductsRoute = ProductsCreateProductsRouteImport.update({
   id: '/products/create-products',
   path: '/products/create-products',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsCartRoute = ProductsCartRouteImport.update({
+  id: '/products/cart',
+  path: '/products/cart',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProductsIdRoute = ProductsIdRouteImport.update({
@@ -80,6 +86,7 @@ const DemoStartSsrDataOnlyRoute = DemoStartSsrDataOnlyRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/products/$id': typeof ProductsIdRoute
+  '/products/cart': typeof ProductsCartRoute
   '/products/create-products': typeof ProductsCreateProductsRoute
   '/products/': typeof ProductsIndexRoute
   '/demo/api/names': typeof DemoApiNamesRoute
@@ -93,6 +100,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/products/$id': typeof ProductsIdRoute
+  '/products/cart': typeof ProductsCartRoute
   '/products/create-products': typeof ProductsCreateProductsRoute
   '/products': typeof ProductsIndexRoute
   '/demo/api/names': typeof DemoApiNamesRoute
@@ -107,6 +115,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/products/$id': typeof ProductsIdRoute
+  '/products/cart': typeof ProductsCartRoute
   '/products/create-products': typeof ProductsCreateProductsRoute
   '/products/': typeof ProductsIndexRoute
   '/demo/api/names': typeof DemoApiNamesRoute
@@ -122,6 +131,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/products/$id'
+    | '/products/cart'
     | '/products/create-products'
     | '/products/'
     | '/demo/api/names'
@@ -135,6 +145,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/products/$id'
+    | '/products/cart'
     | '/products/create-products'
     | '/products'
     | '/demo/api/names'
@@ -148,6 +159,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/products/$id'
+    | '/products/cart'
     | '/products/create-products'
     | '/products/'
     | '/demo/api/names'
@@ -162,6 +174,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ProductsIdRoute: typeof ProductsIdRoute
+  ProductsCartRoute: typeof ProductsCartRoute
   ProductsCreateProductsRoute: typeof ProductsCreateProductsRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
   DemoApiNamesRoute: typeof DemoApiNamesRoute
@@ -194,6 +207,13 @@ declare module '@tanstack/react-router' {
       path: '/products/create-products'
       fullPath: '/products/create-products'
       preLoaderRoute: typeof ProductsCreateProductsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products/cart': {
+      id: '/products/cart'
+      path: '/products/cart'
+      fullPath: '/products/cart'
+      preLoaderRoute: typeof ProductsCartRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/products/$id': {
@@ -258,6 +278,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ProductsIdRoute: ProductsIdRoute,
+  ProductsCartRoute: ProductsCartRoute,
   ProductsCreateProductsRoute: ProductsCreateProductsRoute,
   ProductsIndexRoute: ProductsIndexRoute,
   DemoApiNamesRoute: DemoApiNamesRoute,

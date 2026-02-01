@@ -22,10 +22,10 @@ export default function Header() {
           </div>
           </Link>
           <nav className='hidden items-center gap-3 text-sm font-medium text-slate-700 dark:text-slate-200 sm:flex'>
-            <Link to='/home' className='rounded-lg px-3 py-1 transition hover:bg-slate-100 dakr:hover:bg-slate-800'>
+            <Link to='/' className='rounded-lg px-3 py-1 transition hover:bg-slate-100 dakr:hover:bg-slate-800'>
               Home
             </Link>
-            <Link to='/home' className='rounded-lg px-3 py-1 transition hover:bg-slate-100 dakr:hover:bg-slate-800'>
+            <Link to='/products' className='rounded-lg px-3 py-1 transition hover:bg-slate-100 dakr:hover:bg-slate-800'>
               Products
             </Link>
             <Link to='/products/create-products' className='rounded-lg px-3 py-1 transition hover:bg-slate-100 dakr:hover:bg-slate-800'>
@@ -37,7 +37,7 @@ export default function Header() {
            
         </div>
         <div className='flex items-center gap-2'>
-              <Link to='/cart' className='inline-flex items-center gap-2 rounded-full px-2 py-2 text-xs font-semibold  border border-slate-200 hover:bg-blue-400 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md bg-black text-white'>
+              <Link to='/products/cart' className='inline-flex items-center gap-2 rounded-full px-2 py-2 text-xs font-semibold  border border-slate-200 hover:bg-blue-400 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md bg-black text-white'>
                 <span>Cart</span>
                 <span className='flex items-center  rounded-2xl  px-1 py-0.5 '>0</span>
                 <span className='hidden text-[11px] font-medium text-white sm:inline'>$10</span>
